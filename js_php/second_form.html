@@ -1,0 +1,112 @@
+<head>
+
+    <title>Second Page</title>
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/css/mdb.min.css" rel="stylesheet">
+
+
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/start/jquery-ui.min.css" rel="stylesheet">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet"
+        type="text/css" />
+
+    <style>
+        #solare_2 {
+            display: block;
+            margin-left: auto;
+        }
+
+        #solare_1 {
+            display: block;
+            margin-right: auto;
+        }
+    </style>
+
+</head>
+
+<body background="./pic/ds_3.jpg">
+    <div class="row">
+        <img src="./pic/solare_1.gif" style="display: none" id="solare_1">
+        <h1 id="dateTime"></h1>
+        &nbsp;&nbsp;
+        <button type="button" class="btn btn-primary" data-toggle="modal"
+         data-target="#greetingsModal" style="height: fit-content">
+            Hit ME!!!
+        </button>
+        <img src="./pic/solare_2.gif" style="display: none" id="solare_2">
+    </div>
+
+    &nbsp;&nbsp;
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="greetingsModal" tabindex="-1" role="dialog" aria-labelledby="greetingsModal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Start Scripts -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/js/mdb.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+    <script>
+
+        document.getElementById('solare_1').style.display = '';
+        document.getElementById('solare_2').style.display = '';
+
+        var income_data = <?php echo json_encode($_data) ?>;
+
+        var firstName = income_data['firstName'];
+        var lastName = income_data['lastName'];
+
+        var email = income_data['email'];
+        var phone = income_data['phone'];
+
+        var date = income_data['date'];
+        var message = income_data['msg'];
+
+        document.getElementById('dateTime').innerText = date;
+
+        var x = document.querySelector('.modal-title');
+        x.innerText = 'Greetings!!' + '\n' + lastName + '   ' + firstName + '\n' + 'Bearer of dark Sign';
+
+        var y = document.querySelector('.modal-body');
+        y.innerText = 'You carry the following info:\n' + email + '\n\n' +
+            phone + '\n\n\n' + 'and the following message:\n' + message;
+
+    </script>
+</body>

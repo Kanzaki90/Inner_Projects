@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Favorites</title>
+    <link rel="icon" href="/img/weather.png">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        .btn-info {
+            width: 60px;
+            height: 25px;
+        }
+
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+    <div>
+        <div class="container" style="text-align: end;">
+            <a href="/index.html" class="btn btn-primary" role="button">Home</a>
+            <button type="button" class="btn btn-primary" onclick="toggle();">Toggle</button>
+        </div>
+    </div>
+
+    <div class="container" id="main_container">
+        <div class="row">
+            <div class="col-sm-3">
+                <h4>Id</h4>
+                <br>
+            </div>
+            <div class="col-sm-3">
+                <h4>City</h4>
+            </div>
+            <div class="col-sm-3">
+                <h4>Temperature</h4>
+            </div>
+        </div>
+
+    </div>
+
+    <br><br>
+    <footer>
+        <img src="./img/happy-new-year-gifs.gif" class="center">
+
+        <h2>Made by 神崎</h2>
+    </footer>
+
+
+
+    <script src="./js/favorites.js"></script>
+
+
+    <script>
+
+        document.body.style.backgroundColor = "lightgray";
+
+        function toggle() {
+            if (document.body.style.backgroundColor == "lightgray")
+                document.body.style.backgroundColor = "darkgrey";
+            else
+                document.body.style.backgroundColor = "lightgray";
+        }
+
+        var localStorage = Object.entries(localStorage);
+
+        var container = document.getElementById("main_container");
+
+
+        for (var i = 0; i < Object.entries(localStorage).length; i++) {
+
+            let div = div_creator();
+            let row = div_creator();
+            let city = Object.entries(localStorage)[i][0].toLocaleUpperCase();;
+            div.setAttribute("class", "row");
+
+            let col_0 = div_creator();// id
+            col_0.setAttribute("class", "col-sm-3");
+
+            let col_1 = div_creator(); //city name
+            col_1.setAttribute("class", "col-sm-3");
+
+            let col_2 = div_creator(); //temperature
+            col_2.setAttribute("class", "col-sm-3");
+
+            let col_3 = div_creator(); //temp
+            col_3.setAttribute("class", "col-sm-3");
+
+            let br = document.createElement("br");
+
+            col_0.innerHTML = i;
+            col_1.innerHTML = city;
+            col_2.innerHTML = Object.entries(localStorage)[i][1];
+
+            let btn = document.createElement("button");
+            btn.setAttribute("class", "btn");
+            btn.setAttribute("class", "btn-info");
+            btn.setAttribute("id", city.toLocaleLowerCase());
+            btn.setAttribute("onclick", "view_full_weather(this.id);");
+            col_3.appendChild(btn);
+
+            row.appendChild(col_0);
+            row.appendChild(col_1);
+            row.appendChild(col_2);
+            row.appendChild(col_3);
+
+            div.appendChild(row);
+            container.appendChild(div);
+            container.appendChild(br);
+            container.appendChild(br);
+
+
+        }
+
+        function div_creator() {
+            let div = document.createElement('div');
+            return div;
+        }
+
+        function view_full_weather(i_city) {
+            console.log(i_city);
+            window.location.href = "index.html?q=" + i_city;
+        }
+
+        var daily_btns = document.querySelectorAll(".btn-info");
+        if (daily_btns.length != 0) {
+            for (var i = 0; i < daily_btns.length; i++) {
+                daily_btns[i].innerHTML = "<span style='color: black;'>Daily</span>";
+
+            }
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>

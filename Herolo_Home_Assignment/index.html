@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+
+<include>
+
+</include>
+
+<head>
+
+    <title>Herolo Weather</title>
+    <link rel="icon" href="/img/weather.png">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div>
+        <div class="container" style="text-align: end;">
+            <a href="/index.html" class="btn btn-primary" role="button">Home / Refresh</a>
+            <a href="/favorites.html" class="btn btn-info" role="button">Favorites</a>
+            <button type="button" class="btn btn-primary" onclick="toggle();">Toggle</button>
+        </div>
+    </div>
+
+    <!-- Display TLV by default -->
+    <div style="text-align: center;">
+        <input placeholder="Search by City Name" id="search_location">
+        <button type="button" class="btn btn-primary" onclick="launch_auto_complete();">Search</button>
+    </div>
+
+
+    <!-- <h3 id="daily_forecast_paragraph" style="display: none;"></h3> -->
+    <h3 class="_custom_class" style="display: none;"></h3>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3" id="day_0">
+
+            </div>
+
+            <div class="col-sm-3" id="favorites_col">
+                <button type="button" class="btn btn-primary" onclick="addToFavorites();" id="add_fvrt_btn"
+                    style="display: none;">Add to favorites</button>
+                <button type="button" class="btn btn-primary" onclick="removeFromFavorites();" id="rmv_fvrt_btn"
+                    style="display: none;">Remove from to favorites</button>
+
+            </div>
+
+            <div class="col-sm-3" id="favorited_indicator"></div>
+
+        </div>
+
+        <br>
+        <h2 id="weather_text"></h2>
+        <br>
+    </div>
+    <div>
+        <table id="weekdata" style="overflow-x:auto;" class="table">
+            <thead class="thead-dark">
+
+                <th id="day_1"></th>
+                <th id="day_2"></th>
+                <th id="day_3"></th>
+                <th id="day_4"></th>
+            </thead>
+            <br>
+            <tbody>
+                <tr>
+                    <td id="day_1_forecast"></td>
+                    <td id="day_2_forecast"></td>
+                    <td id="day_3_forecast"></td>
+                    <td id="day_4_forecast"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="error_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="error_modal_title">Error</h2>
+
+                </div>
+                <div class="modal-body" id="error_modal_body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+    <footer>
+        <img src="./img/giphy.gif" class="center">
+
+        <h2>Made by 神崎</h2>
+    </footer>
+
+
+    <!-- Begin scritps -->
+    <script src="./js/favorites.js"></script>
+    <script src="./js/auto_complete.js"></script>
+    <script src="./js/forecast.js"></script>
+    <script src="./js/favorites.js"></script>
+
+    <script>
+
+        var global_city;
+        var global_current_forecast;
+        var global_q_flag = 0;
+
+        document.body.style.backgroundColor = "lightgray";
+
+        var querry = document.location.search;
+        if (querry.length != 0) {
+            global_q_flag = 1;
+            querry = querry.split("=");
+            global_city = decodeURI(querry[1]);
+            launch_auto_complete();
+        }
+
+        launch_auto_complete();
+
+        function toggle() {
+            if (document.body.style.backgroundColor == "lightgray")
+                document.body.style.backgroundColor = "darkgrey";
+            else
+                document.body.style.backgroundColor = "lightgray";
+        }
+
+        //var regex;
+        function launch_auto_complete() {
+
+            //search onclick
+            if (global_q_flag != 1) {
+                global_city = document.getElementById('search_location').value;
+                if (global_city === "") {
+                    global_city = "tel aviv";
+                }
+            }
+
+            // spell check
+            let regex = /^[a-zA-Z\s]+$/;
+
+            if (!regex.test(global_city)) {
+                modal_toggler("Input must be in English only");
+            } else
+                auto_complete_module.search(global_city.toLocaleLowerCase(), get_forecast);
+
+        }
+
+        function get_forecast(i_city_id) {
+            forecast_module.start_retrieval(i_city_id);
+        }
+
+        function data_analyzer(current_weather, daily) {
+
+            global_q_flag = 0;
+
+            var dailyObj = [];
+
+            for (var i = 0; i < daily.length; i++) {
+                if (typeof dailyObj[i] === "undefined") {
+
+                    dailyObj[i] = {};
+                    dailyObj[i]["date"] = "Date: " + daily[i]["Date"].split('T')[0];
+
+                    if (typeof dailyObj[i]["max_temperature"] === "undefined") {
+                        dailyObj[i]["max_temperature"] = daily[i]["Temperature"]["Maximum"]["Value"] + ' ' + daily[i]["Temperature"]["Maximum"]["Unit"];
+                    }
+
+                    if (typeof dailyObj[i]["min_temperature"] === "undefined") {
+                        dailyObj[i]["min_temperature"] = daily[i]["Temperature"]["Minimum"]["Value"] + ' ' + daily[i]["Temperature"]["Minimum"]["Unit"];
+                    }
+
+                }
+            }
+            
+            let temp = document.getElementsByClassName('_custom_class');
+            temp[0].style.display = "";
+            temp[0].innerText = "Your Daily Forecast For:  " + global_city.toLocaleUpperCase();
+            temp[0].setAttribute("id", "daily_forecast_paragraph" + ":" + global_city.toLocaleLowerCase());
+
+
+            var current_day = document.getElementById('day_0');
+            current_day.innerHTML = dailyObj[0]["date"]
+                + "<br>" + current_weather["celcius"] + " C" + "<br>" +
+                document.getElementById("search_location").value.toLocaleUpperCase();
+
+
+
+            for (var i = 1; i <= dailyObj.length - 1; i++) {
+
+
+                var x = document.getElementById("day_" + i);
+                var y = document.getElementById("day_" + i + "_forecast");
+                x.innerText = dailyObj[i]["date"];
+                y.innerHTML = "Max temp: " + dailyObj[i]["max_temperature"]
+                    + "<br>" +
+                    "Min temp: " + dailyObj[i]["min_temperature"];
+            }
+
+            global_current_forecast = current_weather["celcius"] + " C";
+
+            document.getElementById('weather_text').innerText = daily[0]["Day"]["LongPhrase"];
+
+            let flag;
+            for (var i = 0; i < Object.entries(localStorage).length; i++) {
+
+                if (Object.entries(localStorage)[i][0].toLocaleLowerCase() == global_city.toLocaleLowerCase()) {
+                    flag = 1;
+                }
+
+            }
+
+            if (flag == 1) {
+
+                document.getElementById('rmv_fvrt_btn').style.display = "";
+                document.getElementById('add_fvrt_btn').style.display = "none";
+
+                let indicator = document.getElementById('favorited_indicator');
+                indicator.innerText = "This city is saved in your favorites";
+            } else {
+
+                document.getElementById('rmv_fvrt_btn').style.display = "none";
+                document.getElementById('add_fvrt_btn').style.display = "";
+
+                let indicator = document.getElementById('favorited_indicator');
+                indicator.innerText = "This city haven't been saved in your favorites";
+            }
+
+        }
+
+        function addToFavorites() {
+
+            let x = document.getElementsByClassName("_custom_class");
+            let city = x[0].id.split(':')[1];
+
+            // localStorage.setItem(global_city.toLocaleLowerCase(), global_current_forecast);
+            localStorage.setItem(city, global_current_forecast);
+
+            document.getElementById('rmv_fvrt_btn').style.display = "";
+            document.getElementById('add_fvrt_btn').style.display = "none";
+
+            let indicator = document.getElementById('favorited_indicator');
+            indicator.innerText = "This city is saved in your favorites";
+
+        }
+
+        function removeFromFavorites() {
+
+            let x = document.getElementsByClassName("_custom_class");
+            let city = x[0].id.split(':')[1];
+
+            // localStorage.removeItem(global_city.toLocaleLowerCase());
+            localStorage.removeItem(city);
+            document.getElementById('rmv_fvrt_btn').style.display = "none";
+            document.getElementById('add_fvrt_btn').style.display = "";
+
+            let indicator = document.getElementById('favorited_indicator');
+            indicator.innerText = "This city haven't been saved in your favorites";
+
+        }
+
+        function modal_toggler(i_msg) {
+            document.getElementById("error_modal_body").innerText = i_msg;
+            $("#error_modal").modal();
+            return "";
+        }
+
+    </script>
+</body>
+
+</html>

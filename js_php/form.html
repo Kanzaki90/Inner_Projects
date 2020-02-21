@@ -1,0 +1,331 @@
+<head>
+
+    <title>First Page</title>
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/css/mdb.min.css" rel="stylesheet">
+
+
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/start/jquery-ui.min.css" rel="stylesheet">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet"
+        type="text/css" />
+
+    <style>
+        #vm_type_id,
+        #vm_type_size {
+            width: -webkit-fill-available;
+        }
+    </style>
+
+</head>
+
+<body id="init_body">
+    <form action="index.php" method="POST" id="frm_1">
+        <input type="hidden" id="_op" name="op" value="simple_post">
+        <input type="hidden" id="_email" name="email" value="">
+        <input type="hidden" id="_firstName" name="firstName">
+        <input type="hidden" id="_lastName" name="lastName">
+        <input type="hidden" id="_phoneNumber" name="phoneNumber">
+        <input type="hidden" id="_msg" name="msg">
+    </form>
+
+    <div id="_body">
+        <h2 style="color: blanchedalmond">Please Fill in the Data</h2>
+        <br><br>
+
+        <!--        Email-->
+        <div class="form-group row">
+            <label for="email" class="col-sm-4 col-form-label pr-4" style="color: blanchedalmond">Email:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="email" value="">
+            </div>
+        </div>
+
+        <!-- First Name -->
+        <div class="form-group row">
+            <label for="firstName" class="col-sm-4 col-form-label pr-4" style="color: blanchedalmond">First
+                Name:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="firstName" value="">
+            </div>
+        </div>
+        <!-- Last Name-->
+        <div class="form-group row">
+            <label for="lastName" class="col-sm-4 col-form-label pr-4" style="color: blanchedalmond">Last Name:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="lastName" value="">
+            </div>
+        </div>
+        <!--        Phone Number-->
+        <div class="form-group row">
+            <label for="phoneNumber" class="col-sm-4 col-form-label pr-4" style="color: blanchedalmond">Phone
+                Number:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="phoneNumber" value="">
+            </div>
+        </div>
+
+
+        <!--        Post Type-->
+        <div class="form-group row">
+            <label for="post_id" class="col-sm-4 col-form-label pr-3" style="color: blanchedalmond">Post Type:</label>
+            <div class="col-sm-4">
+                <div class="form-control" id="vm_type"><select id="post_id" style="width: inherit">
+                        <option value="0" selected="">Regular Post => You'll be redirected to a new page</option>
+                        <option value="1">Post using Ajax => you'll stay and see generic carousel</option>
+                    </select></div>
+            </div>
+        </div>
+        <!--        -->
+
+        <div class="form-group row col-sm-4 offset-4">
+
+            <input type="button" class="form-control btn-secondary" style="cursor:pointer" value="Write a Message"
+                data-toggle="modal" data-target="#msgModal">
+
+            &nbsp;&nbsp;
+            <input type="button" class="form-control btn-primary" style="cursor:pointer"
+                value="Save Client Specifications" onclick="validationCheck()">
+            &nbsp;&nbsp;
+
+
+            <br><br>
+
+        </div>
+
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+            aria-hidden="true" id="msgModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" style="height: 350px">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Hi there =) Lets write a message</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <textarea id="userMsg" style="width: -webkit-fill-available; height: 170px;"></textarea>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            onclick="msgCleaner()">Cancel</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Save Msg</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- <img src="./pic/solare.gif" style="display: none" id="solare"> -->
+
+
+        <!-- Start Scripts -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/js/mdb.min.js"></script>
+
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <script>
+
+            var temp;
+            var body = document.getElementById('init_body');
+            body.style.backgroundImage = 'url(http://127.0.0.1/js_php/pic/1.png)';
+
+            function saveClientSpecs(i_obj) {
+
+                var postType = document.getElementById('post_id').value;
+                //Regular Post
+                if (postType === "0") {
+
+                    document.getElementById('_email').value = i_obj.email;
+                    document.getElementById('_firstName').value = i_obj.firstName;
+                    document.getElementById('_lastName').value = i_obj.lastName;
+                    document.getElementById('_phoneNumber').value = i_obj.phone;
+                    document.getElementById('_msg').value = i_obj.msg;
+                    var frm = document.getElementById('frm_1');
+                    frm.submit();
+
+
+                } else {
+                    console.log('ajax Post');
+                    i_obj['op'] = 'ajax_post';
+
+                    var url = "http://127.0.0.1/js_php/index.php";
+                    $.ajax({
+                        url: url,
+                        type: 'post',
+                        data: i_obj,
+                        async: true,
+                        success: function (response) {
+                            body.innerHTML = '';
+                            console.log('return from server');
+                            console.log(response);
+                            console.log('-----');
+                            afterAjax(response);
+                        }
+                    });
+
+
+                }
+
+            }
+
+            function validationCheck() {
+
+                var _email = document.getElementById('email').value;
+                var _firstName = document.getElementById('firstName').value;
+                var _lastName = document.getElementById('lastName').value;
+                var _phone = document.getElementById('phoneNumber').value;
+                var _msg = document.getElementById('userMsg').value;
+
+                if (_email === "" || _firstName === "" || _lastName === "" || _phone === "") {
+                    alert("Some of the data is missing");
+                    return '';
+                }
+
+                var clientObj = {
+                    email: _email,
+                    firstName: _firstName,
+                    lastName: _lastName,
+                    phone: _phone,
+                    msg: _msg
+                };
+
+                saveClientSpecs(clientObj);
+            }
+
+            function msgCleaner() {
+                document.getElementById('userMsg').value = '';
+            }
+
+        </script>
+
+        <script>
+
+            var temp_2;
+            function afterAjax(i_data) {
+
+                alert('This is a dynamic carousel =)' + '\n' + 'written in Pure JavaScript');
+                var div = divCreator();
+                div.setAttribute('id', 'ajax_data');
+                div.innerText = i_data['op'] + '\n' +
+                    i_data['email'] + '\n' +
+                    i_data['firstName'] + '\n' +
+                    i_data['lastName'] + '\n' +
+                    i_data['phone'] + '\n' +
+                    i_data['msg'] + '\n';
+
+                body.appendChild(div);
+
+
+                console.log('inside after ajax');
+                console.log(i_data);
+                body.style.backgroundImage = '';
+                var img_arr = [];
+                img_arr.push('/js_php/pic/ds_1.png');
+                img_arr.push('/js_php/pic/ds_2.jpg');
+                img_arr.push('/js_php/pic/ds_1.jpg');
+
+                temp_2 = img_arr;
+
+                var carousel = divCreator();
+                carousel.setAttribute('id', 'imgCarousel');
+                carousel.setAttribute('class', 'carousel slide');
+                carousel.setAttribute('data-ride', 'carousel');
+
+                var ol = document.createElement('ol');
+                ol.setAttribute('class', 'carousel-indicators');
+
+                for (var i = 0; i < img_arr.length; i++) {
+                    var li = document.createElement('li');
+                    li.setAttribute('data-target', '#imgCarousel');
+                    li.setAttribute('data-slide-to', i);
+                    if (i === 0)
+                        li.setAttribute('class', 'active');
+
+                    ol.appendChild(li);
+
+                }
+
+                carousel.appendChild(ol);
+
+                var carousel_inner = divCreator();
+                carousel_inner.setAttribute('class', 'carousel-inner');
+
+                for (var i = 0; i < img_arr.length; i++) {
+
+                    var div = divCreator();
+                    div.setAttribute('class', 'carousel-item');
+                    if (i === 0)
+                        div.setAttribute('class', 'active carousel-item');
+
+                    var img = document.createElement('img');
+                    img.setAttribute('class', 'd-block w-100');
+                    img.setAttribute('src', img_arr[i]);
+
+                    div.appendChild(img);
+                    carousel_inner.appendChild(div);
+
+                }
+
+                carousel.appendChild(carousel_inner);
+
+                var a = document.createElement('a');
+                a.setAttribute('class', 'carousel-control-prev');
+                a.setAttribute('href', '#imgCarousel');
+                a.setAttribute('role', 'button');
+                a.setAttribute('data-slide', 'prev');
+
+                var span = document.createElement('span');
+                span.setAttribute('class', 'carousel-control-prev-icon');
+                span.setAttribute('class', 'sr-only');
+                span.innerText = 'Previous';
+
+                a.appendChild(span);
+
+                carousel.append(a);
+
+                a = document.createElement('a');
+                a.setAttribute('class', 'carousel-control-next');
+                a.setAttribute('href', '#imgCarousel');
+                a.setAttribute('role', 'button');
+                a.setAttribute('data-slide', 'next');
+
+                span = document.createElement('span');
+                span.setAttribute('class', 'carousel-control-next-icon');
+                span.setAttribute('class', 'sr-only');
+                span.innerText = 'Next';
+
+                a.appendChild(span);
+
+                carousel.appendChild(a);
+
+                body.appendChild(carousel);
+
+            }
+
+            function divCreator() {
+                var div = document.createElement('div');
+                return div;
+            }
+
+
+        </script>
+
+
+</body>
