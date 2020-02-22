@@ -7,12 +7,16 @@
 
 <head>
 
-    <title>Herolo Weather</title>
+    <title>_Kansai_</title>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
     <link rel="icon" href="/img/weather.png">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
     <style>
         .center {
             display: block;
@@ -29,7 +33,8 @@
         <div class="container" style="text-align: end;">
             <a href="/index.html" class="btn btn-primary" role="button">Home / Refresh</a>
             <a href="/favorites.html" class="btn btn-info" role="button">Favorites</a>
-            <button type="button" class="btn btn-primary" onclick="toggle();">Toggle</button>
+            <button type="button" class="btn btn-primary" id="toggle">Toggle</button>
+
         </div>
     </div>
 
@@ -51,10 +56,11 @@
             </div>
 
             <div class="col-sm-3" id="favorites_col">
-                <button type="button" class="btn btn-primary" onclick="addToFavorites();" id="add_fvrt_btn"
-                    style="display: none;">Add to favorites</button>
-                <button type="button" class="btn btn-primary" onclick="removeFromFavorites();" id="rmv_fvrt_btn"
-                    style="display: none;">Remove from to favorites</button>
+                <button type="button" class="btn btn-primary" id="add_fvrt_btn" style="display: none;">Add to
+                    favorites</button>
+
+                <button type="button" class="btn btn-primary" id="rmv_fvrt_btn" style="display: none;">Remove from to
+                    favorites</button>
 
             </div>
 
@@ -114,10 +120,9 @@
 
 
     <!-- Begin scritps -->
-    <script src="./js/favorites.js"></script>
+    <script src="./js/JQueryFuctions.js"></script>
     <script src="./js/auto_complete.js"></script>
     <script src="./js/forecast.js"></script>
-    <script src="./js/favorites.js"></script>
 
     <script>
 
@@ -136,13 +141,6 @@
         }
 
         launch_auto_complete();
-
-        function toggle() {
-            if (document.body.style.backgroundColor == "lightgray")
-                document.body.style.backgroundColor = "darkgrey";
-            else
-                document.body.style.backgroundColor = "lightgray";
-        }
 
         //var regex;
         function launch_auto_complete() {
@@ -191,7 +189,7 @@
 
                 }
             }
-            
+
             let temp = document.getElementsByClassName('_custom_class');
             temp[0].style.display = "";
             temp[0].innerText = "Your Daily Forecast For:  " + global_city.toLocaleUpperCase();
@@ -244,37 +242,6 @@
                 let indicator = document.getElementById('favorited_indicator');
                 indicator.innerText = "This city haven't been saved in your favorites";
             }
-
-        }
-
-        function addToFavorites() {
-
-            let x = document.getElementsByClassName("_custom_class");
-            let city = x[0].id.split(':')[1];
-
-            // localStorage.setItem(global_city.toLocaleLowerCase(), global_current_forecast);
-            localStorage.setItem(city, global_current_forecast);
-
-            document.getElementById('rmv_fvrt_btn').style.display = "";
-            document.getElementById('add_fvrt_btn').style.display = "none";
-
-            let indicator = document.getElementById('favorited_indicator');
-            indicator.innerText = "This city is saved in your favorites";
-
-        }
-
-        function removeFromFavorites() {
-
-            let x = document.getElementsByClassName("_custom_class");
-            let city = x[0].id.split(':')[1];
-
-            // localStorage.removeItem(global_city.toLocaleLowerCase());
-            localStorage.removeItem(city);
-            document.getElementById('rmv_fvrt_btn').style.display = "none";
-            document.getElementById('add_fvrt_btn').style.display = "";
-
-            let indicator = document.getElementById('favorited_indicator');
-            indicator.innerText = "This city haven't been saved in your favorites";
 
         }
 

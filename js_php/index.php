@@ -2,20 +2,21 @@
 
 if (isset($_POST)) {
 
-    if (isset($_POST['op'])) {
-        if ($_POST["op"] === "simple_post") {
+    print_r($_POST);
+    // if (isset($_POST['op'])) {
+    //     if ($_POST["op"] === "simple_post") {
 
-            simple_post($_POST);
-        } elseif ($_POST["op"] === "ajax_post") {
+    //         simple_post($_POST);
+    //     } elseif ($_POST["op"] === "ajax_post") {
 
-            $data = $_POST;
-            header('Access-Control-Allow-Origin: *');
-            header('Content-Type: application/json');
-            echo json_encode($data);
-            die();
+    //         $data = $_POST;
+    //         header('Access-Control-Allow-Origin: *');
+    //         header('Content-Type: application/json');
+    //         echo json_encode($data);
+    //         die();
 
-        }
-    }
+    //     }
+    // }
 
     include_once("form.html");
 }

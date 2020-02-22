@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Favorites</title>
+    <title>Favorite Cities</title>
     <link rel="icon" href="/img/weather.png">
 
 
@@ -32,7 +32,9 @@
     <div>
         <div class="container" style="text-align: end;">
             <a href="/index.html" class="btn btn-primary" role="button">Home</a>
-            <button type="button" class="btn btn-primary" onclick="toggle();">Toggle</button>
+            <!-- <button type="button" class="btn btn-primary" onclick="toggle();">Toggle</button> -->
+            <button type="button" class="btn btn-primary" id="toggle">Toggle</button>
+
         </div>
     </div>
 
@@ -59,21 +61,11 @@
         <h2>Made by 神崎</h2>
     </footer>
 
-
-
-    <script src="./js/favorites.js"></script>
-
+    <script src="./js/JQueryFuctions.js"></script>
 
     <script>
 
         document.body.style.backgroundColor = "lightgray";
-
-        function toggle() {
-            if (document.body.style.backgroundColor == "lightgray")
-                document.body.style.backgroundColor = "darkgrey";
-            else
-                document.body.style.backgroundColor = "lightgray";
-        }
 
         var localStorage = Object.entries(localStorage);
 
