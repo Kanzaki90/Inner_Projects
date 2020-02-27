@@ -12,7 +12,7 @@
 
 </head>
 
-<body id="init_body">
+<body id="init_body" background="./pic/1.png">
     <form action="index.php" method="POST" id="frm_1">
         <input type="hidden" id="_op" name="op" value="simple_post">
         <input type="hidden" id="_email" name="email" value="">
@@ -131,7 +131,7 @@
 
         var temp;
         var body = document.getElementById('init_body');
-        body.style.backgroundImage = 'url(http://127.0.0.1/Inner_Projects/js_php/pic/1.png)';
+        // body.style.backgroundImage = 'url(http://127.0.0.1/Inner_Projects/js_php/pic/1.png)';
 
         function saveClientSpecs(i_obj) {
 
@@ -152,7 +152,7 @@
                 console.log('ajax Post');
                 i_obj['op'] = 'ajax_post';
 
-                var url = "http://127.0.0.1/Inner_Projects/js_php/index.php";
+                var url = "http://127.0.0.1:5500/Inner_Projects/js_php/index.php";
                 $.ajax({
                     url: url,
                     type: 'post',

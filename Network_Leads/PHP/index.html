@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/css/mdb.min.css" rel="stylesheet">
+
+    <title>SMS Sender</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <div>
+        <h2 style="color: black">Please Fill in the Data</h2>
+        <br><br>
+
+
+        <!-- Phone number -->
+        <div class="form-group row">
+            <label for="send_to_number" class="col-sm-2 col-form-label pr-2" style="color: black">Send SMS to:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="send_to_number" value="" placeholder="Enter Phone Number">
+            </div>
+        </div>
+        <!-- Message-->
+        <div class="form-group row">
+            <label for="input_message" class="col-sm-2 col-form-label pr-2" style="color: black">Message:</label>
+            <div class="col-sm-6">
+                <!-- <input type="text" class="form-control" id="input_message" value="" placeholder="Enter your message"> -->
+                <textarea id="input_message" class="form-control" placeholder="Enter your message"></textarea>
+            </div>
+        </div>
+        <br>
+
+        <div class="form-group row col-sm-3 offset-3">
+
+            <input type="button" class="form-control btn-primary" style="cursor:pointer" value="Send SMS"
+                id="send_message">
+        </div>
+    </div>
+
+    <br>
+
+    <table id="log_table" style="display: none;">
+        <thead>
+            <th>#</th>
+            <th>Phone Number</th>
+            <th>Message</th>
+            <th>Send Time</th>
+        </thead>
+        <tbody id="log_table_body">
+
+        </tbody>
+    </table>
+
+    <br><br>
+
+    <div id="export_to_pdf" style="display: none;">
+        <div class="form-group row col-sm-3 offset-3">
+            <input type="button" class="form-control btn-primary" style="cursor:pointer" value="Download Logs"
+                id="exportButton">
+        </div>
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="main_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modal_body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Begin Scripts -->
+
+    <script src="./js/functions.js"></script>
+    <script src="./js/table_builder.js"></script>
+
+    <!-- PDF Scripts -->
+    <script type="text/javascript" src="./js/pdf/jquery.js"></script>
+    <script type="text/javascript" src="./js/pdf/pdfmake.min.js"></script>
+    <script type="text/javascript" src="./js/pdf/html2canvas.min.js"></script>
+
+    <!-- Modal Scripts -->
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/js/mdb.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            // If the table is not empty - show the SMS messages
+            func_module.get_logs();
+
+            $("#send_message").click(function () {
+                func_module.send_sms();
+            });
+        });
+
+    </script>
+
+    <!-- PDF Export -->
+    <script>
+        $("#exportButton").click(function () {
+
+            html2canvas($("#log_table_body")[0], {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download("Table.pdf");
+                }
+            });
+        });
+
+        function modal_invoker(i_modal_header, i_modal_body) {
+            let modal_header = document.querySelector("#modal_title");
+            modal_header.innerHTML = i_modal_header;
+
+            let modal_body = document.querySelector("#modal_body");
+            modal_body.innerHTML = i_modal_body;
+            $("#main_modal").modal();
+        }
+    </script>
+
+
+
+
+</body>

@@ -2,27 +2,29 @@
 
 if (isset($_POST)) {
 
+    header('Access-Control-Allow-Origin: *');
+
     print_r($_POST);
-    // if (isset($_POST['op'])) {
-    //     if ($_POST["op"] === "simple_post") {
 
-    //         simple_post($_POST);
-    //     } elseif ($_POST["op"] === "ajax_post") {
+    if (isset($_POST['op'])) {
+        if ($_POST["op"] === "simple_post") {
 
-    //         $data = $_POST;
-    //         header('Access-Control-Allow-Origin: *');
-    //         header('Content-Type: application/json');
-    //         echo json_encode($data);
-    //         die();
+            simple_post($_POST);
+        } elseif ($_POST["op"] === "ajax_post") {
 
-    //     }
-    // }
+            $data = $_POST;
+            header('Content-Type: application/json');
+            echo json_encode($data);
+            die();
+        }
+    }
 
     include_once("form.html");
 }
 
 function simple_post($i_data)
 {
+    echo "Here";
 
     $current_date = date("Y-m-d H:i:s");
     $current_date_2 = date("Y-m-d H:i");
