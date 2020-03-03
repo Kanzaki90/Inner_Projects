@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block name="girit_hello" class="Girit\RunTask\BlockHello" template="hello.phtml"></block>
+        </referenceContainer>
+    </body>
+</config>

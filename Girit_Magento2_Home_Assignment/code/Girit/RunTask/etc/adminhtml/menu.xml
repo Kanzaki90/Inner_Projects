@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <menu>
+        <add id="Girit_RunTask::girit" title="Girit"
+             module="Girit_RunTask" resource="Girit_RunTask::girit"
+             translate="title" sortOrder="900" action="girit"/>
+    </menu>
+</config>
