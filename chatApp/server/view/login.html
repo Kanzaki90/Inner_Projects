@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+
+<head>
+    <title>Login</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/css/mdb.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div>
+        <h2 style="color: black">Login</h2>
+        <br>
+
+        <!-- username-->
+        <div class="form-group row custom-register-row">
+            <label for="login_username" class="col-sm-2 col-form-label pr-2" style="color: black">User Name:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control custom-data" id="login_username" value="" placeholder="Username">
+            </div>
+        </div>
+
+        <!-- password-->
+        <div class="form-group row custom-register-row custom-login-row">
+            <label for="login_password" class="col-sm-2 col-form-label pr-2" style="color: black">Enter Password</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control custom-data" id="login_password" value="" placeholder="Password">
+            </div>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="form-group row col-sm-2 offset-2">
+                <input type="button" class="form-control btn-primary" style="cursor:pointer" value="Login"
+                    id="login_submit">
+            </div>
+
+            <div class="form-group row col-sm-2 offset-2">
+                <input type="button" class="form-control btn-secondary" style="cursor:pointer" value="Redirect to Register page"
+                    id="redirectToRegister">
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/login.js"></script>
+    <script src="./js/inputValidator.max.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("#redirectToRegister").click(function () {
+                window.location.href = "http://localhost/chatApp/index.php?url=register"
+            });
+
+        });
+    </script>
+
+
+
+</body>

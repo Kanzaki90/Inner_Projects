@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<head>
+    <title>
+        Register
+    </title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/css/mdb.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div>
+        <h2 style="color: black">Please fill in the form below for Registartion</h2>
+        <br>
+
+        <!-- email-->
+        <div class="form-group row custom-register-row">
+            <label for="email" class="col-sm-2 col-form-label pr-2" style="color: black">Email:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control custom-data" id="email" value="" placeholder="Your Email">
+            </div>
+        </div>
+
+        <!-- username-->
+        <div class="form-group row custom-register-row">
+            <label for="username" class="col-sm-2 col-form-label pr-2" style="color: black">User Name:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control custom-data" id="username" value="" placeholder="Set Username">
+            </div>
+        </div>
+
+        <!-- password-->
+        <div class="form-group row custom-register-row custom-login-row">
+            <label for="password" class="col-sm-2 col-form-label pr-2" style="color: black">Set Password</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control custom-data" id="password" value="" placeholder="Set Password">
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="form-group row col-sm-2 offset-2">
+                <input type="button" class="form-control btn-primary" style="cursor:pointer" value="Register"
+                    id="register_submit">
+            </div>
+
+            <div class="form-group row col-sm-2 offset-2">
+                <input type="button" class="form-control btn-secondary" style="cursor:pointer" value="Redirect to Login page"
+                    id="redirectToLogin">
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/register.js"></script>
+    <script src="./js/login.js"></script>
+    <script src="./js/inputValidator.max.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#redirectToLogin").click(function () {
+                window.location.href = "http://localhost/chatApp/index.php?url=login"
+            });
+
+        });
+    </script>
+</body>
