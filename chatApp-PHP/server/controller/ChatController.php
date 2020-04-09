@@ -26,7 +26,7 @@ if (isset($_POST)) {
 
 
 
-        if ($_POST["op"] === "getMessage") {
+        if ($_POST["op"] === "getMessageHistory") {
 
             $chat_message_id = "";
 
@@ -35,10 +35,10 @@ if (isset($_POST)) {
                 "to_user_id" => $_POST["toUserId"]
             );
 
-            if (isset($_POST["chatMessageId"])) {
+            if (isset($_POST["chatMessageId"]))
                 $getMessageData["chat_message_id"] = $chat_message_id;
-            }
-            
+
+
             $messageReceiver = $chatInstance->getMessage($getMessageData);
             echo json_encode($messageReceiver);
             die();

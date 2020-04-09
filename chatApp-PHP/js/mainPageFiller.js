@@ -13,7 +13,10 @@ var tableBuilderModule = (function () {
             tr.appendChild(td);
 
             td = _tdCreator();
-            td.innerHTML = "Active";
+            if (i_data[i]["status"] === "1")
+                td.innerHTML = "Online";
+            else
+                td.innerHTML = "Offline";
             tr.appendChild(td);
 
             td = _tdCreator();
@@ -36,7 +39,8 @@ var tableBuilderModule = (function () {
         return td;
     }
 
-    function _userDataFiller(userData) {
+    function _userDataFiller(userData, data) {
+
         let userName = userData.username;
         let lastLogin = userData.last_login;
 

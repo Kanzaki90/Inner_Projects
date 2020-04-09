@@ -52,13 +52,17 @@ class UserOnlineModel extends BaseModel
     {
         $connection = $this->getConnector();
 
-        // $sql = "select * from online_users where user_id != '" . $user_id . "' and status= " . 1 . "";
+        // $sql = "select os.user_id, reg.username
+        //         from online_users os
+        //         left join register reg on os.user_id = reg.user_id
+        //         where reg.user_id != '" . $user_id . "'
+        //         and os.status=" . 1 . "";
 
-        $sql = "select os.user_id, reg.username
-                from online_users os
-                left join register reg on os.user_id = reg.user_id
-                where reg.user_id != '" . $user_id . "'
-                and os.status=" . 1 . "";
+        $sql = "select os.user_id, reg.username, os.status
+        from online_users os
+        left join register reg on os.user_id = reg.user_id
+        where reg.user_id != '" . $user_id . "'
+        order by os.status desc";
 
         $result = $connection->query($sql);
         $data = $result->fetch_all(MYSQLI_ASSOC);

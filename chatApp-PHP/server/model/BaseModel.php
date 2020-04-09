@@ -6,5 +6,4 @@ class BaseModel
     {
         return $connection = new mysqli("localhost", "root", "", "chat_schema");
     }
-    // public $connection = new mysqli("localhost", "root", "", "chat_schema");
 }

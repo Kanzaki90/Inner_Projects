@@ -42,8 +42,17 @@ class ChatModel extends BaseModel
         else
             $chatMessageId = $dbData[0]["chat_message_id"];
 
-        $sql = "insert into chat (chat_message_id, i, timestamp, data)
-                values ('" . $chatMessageId . "', '" . $i . "' ,'" . $timestamp . "', '" . json_encode($sendMessageData) . "')";
+        $sql = "insert into chat (
+                chat_message_id, 
+                i, 
+                timestamp, 
+                data)
+
+                values (
+                '" . $chatMessageId . "', 
+                '" . $i . "' ,
+                '" . $timestamp . "', 
+                '" . json_encode($sendMessageData) . "')";
 
         if ($connection->query($sql))
             return $chatMessageId;
@@ -52,16 +61,9 @@ class ChatModel extends BaseModel
     }
 
 
-
     public function getMessage(array $getMessageData)
     {
         $connection = $this->getConnector();
-
-        //if there are no messages
-        // if ($getMessageData["chat_message_id"] === "null")
-        //     return "null";
-
-
 
         $sql = "select chat_message_id from chat where
                 (from_user_id='" . $getMessageData["from_user_id"] . "' and to_user_id='" . $getMessageData["to_user_id"] . "')
@@ -73,27 +75,42 @@ class ChatModel extends BaseModel
         $result->free();
 
         if (empty($data)) {
-            return "No messages";
+            return "No messages yet";
             die();
         }
 
 
         $chatMessageId = $data[0]["chat_message_id"];
 
-
-        $sql = "select timestamp, from_user_id, to_user_id, message from chat 
+        $sql = "select ch.timestamp as sent,
+        reg.username as from_user, reg2.username as to_user, ch.message
+        from chat ch
+        left join register reg on reg.user_id = ch.from_user_id
+        left join register reg2 on reg2.user_id = ch.to_user_id
         where chat_message_id='" . $chatMessageId . "'
         order by timestamp asc";
 
         $result = $connection->query($sql);
         $data = $result->fetch_all(MYSQLI_ASSOC);
-
-        print_r($data);
-        die();
-
         $result->free();
         $connection->close();
 
         return $data;
+    }
+
+    public function getLatestMessage(array $latestMessageData){
+
+        $connection = $this->getConnector();
+
+        $sql = "select ch.timestamp as sent,
+        reg.username as from_user, reg2.username as to_user, ch.message
+        from chat ch
+        left join register reg on reg.user_id = ch.from_user_id
+        left join register reg2 on reg2.user_id = ch.to_user_id
+        (from_user_id='" . $latestMessageData["to_user_id"] . "' 
+        and 
+        to_user_id='" . $latestMessageData["from_user_id"] . "')
+        and ch.timestamp > '" . $latestMessageData["sent"] ."'
+        order by timestamp asc";
     }
 }

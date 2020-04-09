@@ -27,13 +27,11 @@ if (isset($_POST)) {
 
             $online = $userOnline->setOnline($uid);
             $online = $userOnline->viewOnlineUsers($uid);
-            
             $logger = $loginInstance->getUserData($uid);
 
             $data = array();
             $data["userInfo"] = $logger;
             $data["onlineUsers"] = $online;
-
             echo json_encode($data);
             die();
         }
