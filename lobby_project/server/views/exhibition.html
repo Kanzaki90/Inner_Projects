@@ -1,0 +1,91 @@
+<head>
+    <title>
+        Exibition
+    </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/css/mdb.min.css" rel="stylesheet">
+
+</head>
+<?php include_once("server/helpers/navigator.html") ?>
+
+<body>
+    <img src="server/img/exibition/exhibition.jpg" alt="mainLobby" usemap="#mainLobby" style="max-width: 100%" />
+
+    <map name="mainLobby" id="mainLobby">
+        <area shape="rect" coords="61, 27, 403, 329" alt="1" style="cursor: pointer;">
+        <area shape="rect" coords="115, 385, 460, 640" alt="2" style="cursor: pointer;">
+        <area shape="rect" coords="77, 703, 447, 989" alt="3" style="cursor: pointer;">
+        <area shape="rect" coords="1450, 17, 1911, 303" alt="4" style="cursor: pointer;">
+        <area shape="rect" coords="1029, 383, 1365, 655" alt="5" style="cursor: pointer;">
+        <area shape="rect" coords="575, 1000, 930, 700" alt="6" style="cursor: pointer;">
+        <area shape="rect" coords="1500, 740, 1860, 1100" alt="7, style=" cursor: pointer;">
+
+    </map>
+
+    <div>
+        <div class="data-custom">
+            <div class="card" style="width: 18rem;">
+                <img src="server/img/exibition/1.JPG" class="card-img-top" alt="Null">
+            </div>
+        </div>
+
+        <div class="data-custom">
+            <div class="card" style="width: 18rem;">
+                <img src="server/img/exibition/2.JPG" class="card-img-top" alt="Null">
+            </div>
+        </div>
+
+        <div class="data-custom">
+            <div class="card" style="width: 18rem;">
+                <img src="server/img/exibition/3.JPG" class="card-img-top" alt="Null">
+            </div>
+        </div>
+
+        <div class="data-custom">
+            <div class="card" style="width: 18rem;">
+                <img src="server/img/exibition/4.JPG" class="card-img-top" alt="Null">
+            </div>
+        </div>
+
+        <div class="data-custom">
+            <div class="card" style="width: 18rem;">
+                <img src="server/img/exibition/5.JPG" class="card-img-top" alt="Null">
+            </div>
+        </div>
+
+        <div class="data-custom">
+            <div class="card" style="width: 18rem;">
+                <img src="server/img/exibition/6.JPG" class="card-img-top" alt="Null">
+            </div>
+        </div>
+
+        <div class="data-custom">
+            <div class="card" style="width: 18rem;">
+                <img src="server/img/exibition/7.JPG" class="card-img-top" alt="Null">
+            </div>
+        </div>
+
+    </div>
+
+    <script src="server/js/redirector.js"></script>
+    <script src="server/js/mapHelper.js"></script>
+    <script src="server/js/imageMapResizer.min.js"></script>
+    <script>
+        var x;
+
+        $(document).ready(function () {
+            $('map').imageMapResize();
+
+            window.addEventListener("click", function (e) {
+                console.log("X: " + e.x);
+                console.log("Y: " + e.y);
+                console.log("e: " + e);
+                x = e;
+            })
+        });
+    </script>
+
+</body>
