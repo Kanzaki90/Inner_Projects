@@ -12,18 +12,19 @@ class TransactionsModel extends Model
      *
      * @var string
      */
+
     protected $table = 'transactions';
 
     public static function get_transactions_by_user_id($u_id)
     {
         $match = [
-            'userstable.user_id' => $u_id,
+            'userstable.id' => $u_id,
             'accounts.is_active' => 1
         ];
 
         $query = DB::table('transactions')
-            ->leftJoin('accounts', 'transactions.account_id', '=', 'accounts.account_id')
-            ->leftJoin('userstable', 'userstable.user_id', '=', 'accounts.user_id')
+            ->leftJoin('accounts', 'transactions.account_id', '=', 'accounts.id')
+            ->leftJoin('userstable', 'userstable.id', '=', 'accounts.user_id')
             ->where($match)->get();
         if (count($query) === 0)
             return "No Data was found or the account is disabled";
@@ -35,11 +36,11 @@ class TransactionsModel extends Model
     {
         $match = [
             'is_active' => 1,
-            'accounts.account_id' => $a_id
+            'accounts.id' => $a_id
         ];
 
         $query = DB::table('transactions')
-            ->rightJoin('accounts', 'transactions.account_id', '=', 'accounts.account_id')
+            ->rightJoin('accounts', 'transactions.account_id', '=', 'accounts.id')
             ->where($match)->get();
 
         if (count($query) === 0)
@@ -47,4 +48,6 @@ class TransactionsModel extends Model
         else
             return $query;
     }
+
+    
 }

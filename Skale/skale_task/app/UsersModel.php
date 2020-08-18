@@ -17,10 +17,9 @@ class UsersModel extends Model
 
     public static function get_user_by_id($u_id)
     {
-        // User ID's are unique soq any way it returns a single user
-        $user = DB::select('select * from userstable where user_id=' . $u_id . '', [1]);
-        if (count(($user)) === 0)
-            return "User with that ID doesnt exists";
+        $user = UsersModel::where('id', '=', $u_id)->get();
+        if (count($user) === 0)
+            return "User Not Found";
         else
             return $user;
     }
